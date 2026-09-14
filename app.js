@@ -40,13 +40,13 @@ function setStatus(ok, text) {
 }
 
 function renderLatest(latest) {
-  const products = [...latest.products].sort((a, b) => a.face_value_try - b.face_value_try);
+  const products = [...latest.products].sort((a, b) => a.face_value_usd - b.face_value_usd);
   const best = products.reduce((a, b) =>
-    a.cny_per_100_try <= b.cny_per_100_try ? a : b
+    a.cny_per_usd_value <= b.cny_per_usd_value ? a : b
   );
 
-  $("best-face").textContent = `${best.face_value_try} TRY`;
-  $("best-cost").textContent = `${fmtCny(best.cny_per_100_try, 2)} / 100 TRY`;
+  $("best-face").textContent = `${best.face_value_usd} USD`;
+  $("best-cost").textContent = `${fmtCny(best.cny_per_usd_value, 2)} / 1 USD 面额`;
   $("fx-rate").textContent = Number(latest.exchange_rate.usd_cny).toFixed(4);
   $("fx-source").textContent = latest.exchange_rate.source || "公开汇率源";
   $("product-count").textContent = `${products.length} 个`;
@@ -61,15 +61,16 @@ function renderLatest(latest) {
 
   $("price-body").innerHTML = products
     .map((item) => {
-      const ratio = item.cny_per_100_try / best.cny_per_100_try;
+      const ratio = item.cny_per_usd_value / best.cny_per_usd_value;
       const isBest = ratio <= 1.002;
       const label = isBest ? "最低" : ratio <= 1.02 ? "不错" : "正常";
       return `
         <tr class="${isBest ? "best-row" : ""}">
-          <td><strong>${item.face_value_try} TRY</strong></td>
+          <td><strong>${item.face_value_usd} USD</strong></td>
+          <td>${fmtUsd(item.list_price_usd)}</td>
           <td>${fmtUsd(item.price_usd)}</td>
           <td>${fmtCny(item.price_cny)}</td>
-          <td><strong>${fmtCny(item.cny_per_100_try, 2)}</strong></td>
+          <td><strong>${fmtCny(item.cny_per_usd_value, 2)}</strong></td>
           <td><span class="badge ${isBest ? "best" : ""}">${label}</span></td>
         </tr>`;
     })
@@ -77,23 +78,23 @@ function renderLatest(latest) {
 
   const select = $("face-select");
   select.innerHTML = products
-    .map((item) => `<option value="${item.face_value_try}">${item.face_value_try} TRY</option>`)
+    .map((item) => `<option value="${item.face_value_usd}">${item.face_value_usd} USD</option>`)
     .join("");
 
-  const preferred = products.find((item) => item.face_value_try === 1000) || best;
-  select.value = String(preferred.face_value_try);
+  const preferred = products.find((item) => item.face_value_usd === 100) || best;
+  select.value = String(preferred.face_value_usd);
 }
 
 function historyPoints(history, faceValue) {
   return (history.snapshots || [])
     .map((snapshot) => {
       const item = (snapshot.products || []).find(
-        (product) => Number(product.face_value_try) === Number(faceValue)
+        (product) => Number(product.face_value_usd) === Number(faceValue)
       );
       if (!item) return null;
       return {
         time: new Date(snapshot.checked_at).getTime(),
-        value: Number(item.cny_per_100_try),
+        value: Number(item.cny_per_usd_value),
       };
     })
     .filter((item) => item && Number.isFinite(item.time) && Number.isFinite(item.value))
@@ -122,9 +123,9 @@ function renderChart(history, faceValue) {
   const avg30 = averageSince(all, 30);
   const low = all.length ? Math.min(...all.map((p) => p.value)) : null;
 
-  $("avg-7").textContent = avg7 == null ? "—" : `${fmtCny(avg7, 2)} / 100`;
-  $("avg-30").textContent = avg30 == null ? "—" : `${fmtCny(avg30, 2)} / 100`;
-  $("history-low").textContent = low == null ? "—" : `${fmtCny(low, 2)} / 100`;
+  $("avg-7").textContent = avg7 == null ? "—" : `${fmtCny(avg7, 2)} / 1 USD`;
+  $("avg-30").textContent = avg30 == null ? "—" : `${fmtCny(avg30, 2)} / 1 USD`;
+  $("history-low").textContent = low == null ? "—" : `${fmtCny(low, 2)} / 1 USD`;
 
   if (recent.length < 2) {
     $("chart").innerHTML = '<div class="empty">历史数据积累后将在这里显示趋势</div>';
@@ -153,7 +154,7 @@ function renderChart(history, faceValue) {
   const midY = (minY + maxY) / 2;
 
   $("chart").innerHTML = `
-    <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" aria-label="${faceValue} TRY 最近 30 天价格趋势">
+    <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" aria-label="${faceValue} USD 最近 30 天价格趋势">
       <line class="axis" x1="${padX}" y1="${padY}" x2="${padX}" y2="${height - padY}" />
       <line class="axis" x1="${padX}" y1="${height - padY}" x2="${width - padX}" y2="${height - padY}" />
       <text x="6" y="${padY + 4}">${minY.toFixed(2)}</text>
@@ -185,7 +186,7 @@ async function main() {
   } catch (error) {
     console.error(error);
     setStatus(false, "暂时读取不到价格数据，请稍后再试或检查 GitHub Actions");
-    $("price-body").innerHTML = '<tr><td colspan="5" class="empty">暂无可用数据</td></tr>';
+    $("price-body").innerHTML = '<tr><td colspan="6" class="empty">暂无可用数据</td></tr>';
   }
 }
 
