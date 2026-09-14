@@ -8,14 +8,6 @@ const fmtCny = (value, digits = 2) =>
     maximumFractionDigits: digits,
   }).format(value);
 
-const fmtUsd = (value) =>
-  new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
-
 function formatDate(value) {
   return new Intl.DateTimeFormat("zh-CN", {
     timeZone: "Asia/Shanghai",
@@ -67,8 +59,7 @@ function renderLatest(latest) {
       return `
         <tr class="${isBest ? "best-row" : ""}">
           <td><strong>${item.face_value_usd} USD</strong></td>
-          <td>${fmtUsd(item.list_price_usd)}</td>
-          <td>${fmtUsd(item.price_usd)}</td>
+          <td>${fmtCny(item.list_price_cny)}</td>
           <td>${fmtCny(item.price_cny)}</td>
           <td><strong>${fmtCny(item.cny_per_usd_value, 2)}</strong></td>
           <td><span class="badge ${isBest ? "best" : ""}">${label}</span></td>
@@ -186,7 +177,7 @@ async function main() {
   } catch (error) {
     console.error(error);
     setStatus(false, "暂时读取不到价格数据，请稍后再试或检查 GitHub Actions");
-    $("price-body").innerHTML = '<tr><td colspan="6" class="empty">暂无可用数据</td></tr>';
+    $("price-body").innerHTML = '<tr><td colspan="5" class="empty">暂无可用数据</td></tr>';
   }
 }
 

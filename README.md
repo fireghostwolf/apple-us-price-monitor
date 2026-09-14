@@ -1,12 +1,11 @@
 # Apple US Price Monitor
 
-监控 SEAGM 美国区 Apple / iTunes 礼品卡价格，并统一换算成人民币。
+监控 SEAGM 美国区 Apple / iTunes 礼品卡的人民币报价。
 
 ## 功能
 
 - 每 30 分钟抓取 SEAGM 美国区 Apple 礼品卡价格
-- 记录各面额美元售价与人民币估算价
-- 同时记录原价和折后售价
+- 直接记录 SEAGM 的人民币原价与折后售价
 - 计算每 1 USD 面额的人民币成本，便于横向比较面额
 - 保存历史价格，展示 7 日 / 30 日均价与历史最低
 - GitHub Pages 静态价格看板
@@ -15,9 +14,9 @@
 ## 数据源
 
 - 礼品卡：https://www.seagm.com/zh-cn/itunes-gift-card-united-states
-- USD/CNY：Frankfurter；失败时自动尝试 open.er-api.com，并可回退到上一次成功汇率
+- 参考 USD/CNY：Frankfurter；失败时自动尝试 open.er-api.com，并可回退到上一次成功汇率
 
-> 人民币价格为按实时 USD/CNY 汇率换算的估算值。实际支付宝/银行卡结算金额可能因支付渠道手续费、发卡行汇率等不同，以 SEAGM 最终结算页为准。
+> 人民币价格直接采集自 SEAGM；公开 USD/CNY 汇率仅供参考。实际支付宝/银行卡结算金额可能包含支付手续费，以 SEAGM 最终结算页为准。
 
 ## GitHub Pages
 

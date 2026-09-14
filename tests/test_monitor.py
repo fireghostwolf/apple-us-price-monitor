@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock, patch
 
-from src.monitor import SEAGM_URL, fetch_html, parse_products
+from src.monitor import SEAGM_URL, fetch_html, normalize_products, parse_products
 
 
 SETTINGS_HTML = """
@@ -14,7 +14,7 @@ SETTINGS_HTML = """
 """
 
 
-def product_html(currency: str = "USD", symbol: str = "US$") -> str:
+def product_html(currency: str = "CNY", symbol: str = "¥") -> str:
     rows = []
     for face_value in (2, 3, 4, 5, 10):
         rows.append(
@@ -36,7 +36,7 @@ def product_html(currency: str = "USD", symbol: str = "US$") -> str:
 
 class FetchHtmlTests(unittest.TestCase):
     @patch("src.monitor.requests.Session")
-    def test_fetch_html_switches_session_to_usd(self, session_factory: Mock) -> None:
+    def test_fetch_html_switches_session_to_cny(self, session_factory: Mock) -> None:
         session = session_factory.return_value
         settings_response = Mock(
             text=SETTINGS_HTML,
@@ -50,11 +50,11 @@ class FetchHtmlTests(unittest.TestCase):
 
         self.assertEqual(fetch_html(), product_response.text)
         post_data = session.post.call_args.kwargs["data"]
-        self.assertEqual(post_data["currency"], "USD")
+        self.assertEqual(post_data["currency"], "CNY")
         self.assertEqual(post_data["language"], "zh")
 
     @patch("src.monitor.requests.Session")
-    def test_fetch_html_rejects_non_usd_response(self, session_factory: Mock) -> None:
+    def test_fetch_html_rejects_non_cny_response(self, session_factory: Mock) -> None:
         session = session_factory.return_value
         settings_response = Mock(
             text=SETTINGS_HTML,
@@ -66,18 +66,19 @@ class FetchHtmlTests(unittest.TestCase):
         session.get.side_effect = [settings_response, product_response]
         session.post.return_value.raise_for_status.return_value = None
 
-        with self.assertRaisesRegex(RuntimeError, "预期 USD，实际为 EUR"):
+        with self.assertRaisesRegex(RuntimeError, "预期 CNY，实际为 EUR"):
             fetch_html()
 
 
 class ParseProductsTests(unittest.TestCase):
-    def test_parse_usd_products(self) -> None:
+    def test_parse_cny_products(self) -> None:
         products = parse_products(product_html())
 
         self.assertEqual(len(products), 5)
         self.assertEqual(products[0]["face_value_usd"], 2)
-        self.assertEqual(products[0]["list_price_usd"], 2.0)
-        self.assertEqual(products[0]["price_usd"], 1.94)
+        self.assertEqual(products[0]["list_price_cny"], 2.0)
+        self.assertEqual(products[0]["price_cny"], 1.94)
+        self.assertEqual(normalize_products(products)[0]["cny_per_usd_value"], 0.97)
 
 
 if __name__ == "__main__":

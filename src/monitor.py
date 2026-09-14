@@ -62,13 +62,13 @@ def fetch_html() -> str:
     settings_soup = BeautifulSoup(settings_response.text, "html.parser")
     settings_form = settings_soup.select_one("#lang_currency_settings form")
     if settings_form is None or not settings_form.get("action"):
-        raise RuntimeError("SEAGM 货币设置页面异常，无法切换为美元")
+        raise RuntimeError("SEAGM 货币设置页面异常，无法切换为人民币")
 
     settings_data = {
         node["name"]: node.get("value", "")
         for node in settings_form.select("input[name]")
     }
-    settings_data.update({"language": "zh", "currency": "USD"})
+    settings_data.update({"language": "zh", "currency": "CNY"})
     settings_headers = {
         **HEADERS,
         "Origin": "https://www.seagm.com",
@@ -90,9 +90,9 @@ def fetch_html() -> str:
 
     soup = BeautifulSoup(response.text, "html.parser")
     currency_node = soup.select_one(".language_currency .currency")
-    if currency_node is None or currency_node.get_text(strip=True).upper() != "USD":
+    if currency_node is None or currency_node.get_text(strip=True).upper() != "CNY":
         currency = currency_node.get_text(strip=True) if currency_node else "未知"
-        raise RuntimeError(f"SEAGM 结算货币异常，预期 USD，实际为 {currency}")
+        raise RuntimeError(f"SEAGM 结算货币异常，预期 CNY，实际为 {currency}")
     return response.text
 
 
@@ -110,22 +110,23 @@ def parse_products(html: str) -> list[dict[str, float | int | str]]:
 
         name = name_node.get_text(" ", strip=True)
         face_match = re.search(r"([\d,.]+)\s*(?:USD|美金)", name, re.IGNORECASE)
-        original_match = re.search(r"US\$\s*([\d,.]+)", original_node.get_text(" ", strip=True))
-        sale_match = re.search(r"US\$\s*([\d,.]+)", sale_node.get_text(" ", strip=True))
+        price_pattern = r"(?:CN¥|CNY|[¥￥])\s*([\d,.]+)"
+        original_match = re.search(price_pattern, original_node.get_text(" ", strip=True))
+        sale_match = re.search(price_pattern, sale_node.get_text(" ", strip=True))
         if not face_match or not original_match or not sale_match:
             continue
 
         face_value = float(face_match.group(1).replace(",", ""))
-        list_price_usd = float(original_match.group(1).replace(",", ""))
-        price_usd = float(sale_match.group(1).replace(",", ""))
-        if face_value <= 0 or list_price_usd <= 0 or price_usd <= 0:
+        list_price_cny = float(original_match.group(1).replace(",", ""))
+        price_cny = float(sale_match.group(1).replace(",", ""))
+        if face_value <= 0 or list_price_cny <= 0 or price_cny <= 0:
             continue
 
         face_key: float | int = int(face_value) if face_value.is_integer() else face_value
         products[face_value] = {
             "face_value_usd": face_key,
-            "list_price_usd": round(list_price_usd, 4),
-            "price_usd": round(price_usd, 4),
+            "list_price_cny": round(list_price_cny, 2),
+            "price_cny": round(price_cny, 2),
             "product_name": f"iTunes Gift Card {face_key} USD US",
         }
 
@@ -174,17 +175,15 @@ def fetch_usd_cny() -> tuple[float, str]:
 
 
 def normalize_products(
-    products: list[dict[str, float | int | str]], usd_cny: float
+    products: list[dict[str, float | int | str]],
 ) -> list[dict[str, float | int | str]]:
     normalized = []
     for product in products:
         face_value = float(product["face_value_usd"])
-        price_usd = float(product["price_usd"])
-        price_cny = price_usd * usd_cny
+        price_cny = float(product["price_cny"])
         normalized.append(
             {
                 **product,
-                "price_cny": round(price_cny, 2),
                 "cny_per_usd_value": round(price_cny / face_value, 4),
             }
         )
@@ -194,7 +193,11 @@ def normalize_products(
 def append_history(snapshot: dict[str, Any]) -> None:
     history = read_json(HISTORY_FILE, {"snapshots": []})
     snapshots = history.get("snapshots")
-    if history.get("region") != snapshot["source"]["region"] or not isinstance(snapshots, list):
+    if (
+        history.get("region") != snapshot["source"]["region"]
+        or history.get("price_currency") != snapshot["source"]["price_currency"]
+        or not isinstance(snapshots, list)
+    ):
         snapshots = []
 
     snapshots.append(
@@ -204,8 +207,7 @@ def append_history(snapshot: dict[str, Any]) -> None:
             "products": [
                 {
                     "face_value_usd": item["face_value_usd"],
-                    "list_price_usd": item["list_price_usd"],
-                    "price_usd": item["price_usd"],
+                    "list_price_cny": item["list_price_cny"],
                     "price_cny": item["price_cny"],
                     "cny_per_usd_value": item["cny_per_usd_value"],
                 }
@@ -229,6 +231,7 @@ def append_history(snapshot: dict[str, Any]) -> None:
         HISTORY_FILE,
         {
             "region": snapshot["source"]["region"],
+            "price_currency": snapshot["source"]["price_currency"],
             "retention_days": 60,
             "snapshots": retained,
         },
@@ -239,7 +242,7 @@ def main() -> None:
     html = fetch_html()
     raw_products = parse_products(html)
     usd_cny, fx_source = fetch_usd_cny()
-    products = normalize_products(raw_products, usd_cny)
+    products = normalize_products(raw_products)
 
     checked_at = now_iso()
     latest = {
@@ -249,6 +252,7 @@ def main() -> None:
             "name": "SEAGM",
             "url": SEAGM_URL,
             "region": "US",
+            "price_currency": "CNY",
         },
         "exchange_rate": {
             "usd_cny": round(usd_cny, 6),
@@ -268,7 +272,7 @@ def main() -> None:
 
     best = min(products, key=lambda item: float(item["cny_per_usd_value"]))
     print(f"抓取成功：{len(products)} 个面额")
-    print(f"USD/CNY: {usd_cny:.4f} ({fx_source})")
+    print(f"参考 USD/CNY: {usd_cny:.4f} ({fx_source})")
     print(
         "当前单位成本最低："
         f"{best['face_value_usd']} USD / ¥{best['cny_per_usd_value']} per USD"
