@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "checked_at": "2026-10-12T02:32:42+00:00",
+  "checked_at": "2026-10-12T10:05:00+00:00",
   "source": {
     "name": "SEAGM",
     "url": "https://www.seagm.com/zh-cn/itunes-gift-card-united-states",
@@ -62,94 +62,94 @@
     },
     {
       "face_value_usd": 20,
-      "list_price_cny": 142.9,
-      "price_cny": 138.61,
+      "list_price_cny": 142.91,
+      "price_cny": 138.62,
       "product_name": "iTunes Gift Card 20 USD US",
-      "cny_per_usd_value": 6.9305
+      "cny_per_usd_value": 6.931
     },
     {
       "face_value_usd": 25,
-      "list_price_cny": 178.59,
-      "price_cny": 173.23,
+      "list_price_cny": 178.6,
+      "price_cny": 173.24,
       "product_name": "iTunes Gift Card 25 USD US",
-      "cny_per_usd_value": 6.9292
+      "cny_per_usd_value": 6.9296
     },
     {
       "face_value_usd": 30,
-      "list_price_cny": 214.28,
-      "price_cny": 207.85,
+      "list_price_cny": 214.29,
+      "price_cny": 207.86,
       "product_name": "iTunes Gift Card 30 USD US",
-      "cny_per_usd_value": 6.9283
-    },
-    {
-      "face_value_usd": 40,
-      "list_price_cny": 285.72,
-      "price_cny": 277.15,
-      "product_name": "iTunes Gift Card 40 USD US",
       "cny_per_usd_value": 6.9287
     },
     {
+      "face_value_usd": 40,
+      "list_price_cny": 285.74,
+      "price_cny": 277.17,
+      "product_name": "iTunes Gift Card 40 USD US",
+      "cny_per_usd_value": 6.9293
+    },
+    {
       "face_value_usd": 50,
-      "list_price_cny": 357.17,
-      "price_cny": 346.45,
+      "list_price_cny": 357.2,
+      "price_cny": 346.48,
       "product_name": "iTunes Gift Card 50 USD US",
-      "cny_per_usd_value": 6.929
+      "cny_per_usd_value": 6.9296
     },
     {
       "face_value_usd": 60,
-      "list_price_cny": 428.55,
-      "price_cny": 415.69,
+      "list_price_cny": 428.58,
+      "price_cny": 415.72,
       "product_name": "iTunes Gift Card 60 USD US",
-      "cny_per_usd_value": 6.9282
+      "cny_per_usd_value": 6.9287
     },
     {
       "face_value_usd": 100,
-      "list_price_cny": 714.27,
-      "price_cny": 692.84,
+      "list_price_cny": 714.33,
+      "price_cny": 692.9,
       "product_name": "iTunes Gift Card 100 USD US",
-      "cny_per_usd_value": 6.9284
+      "cny_per_usd_value": 6.929
     },
     {
       "face_value_usd": 150,
-      "list_price_cny": 1064.62,
-      "price_cny": 1032.68,
+      "list_price_cny": 1064.7,
+      "price_cny": 1032.76,
       "product_name": "iTunes Gift Card 150 USD US",
-      "cny_per_usd_value": 6.8845
+      "cny_per_usd_value": 6.8851
     },
     {
       "face_value_usd": 200,
-      "list_price_cny": 1419.49,
-      "price_cny": 1376.91,
+      "list_price_cny": 1419.6,
+      "price_cny": 1377.01,
       "product_name": "iTunes Gift Card 200 USD US",
-      "cny_per_usd_value": 6.8846
+      "cny_per_usd_value": 6.885
     },
     {
       "face_value_usd": 250,
-      "list_price_cny": 1774.36,
-      "price_cny": 1721.13,
+      "list_price_cny": 1774.5,
+      "price_cny": 1721.27,
       "product_name": "iTunes Gift Card 250 USD US",
-      "cny_per_usd_value": 6.8845
+      "cny_per_usd_value": 6.8851
     },
     {
       "face_value_usd": 300,
-      "list_price_cny": 2129.23,
-      "price_cny": 2065.35,
+      "list_price_cny": 2129.4,
+      "price_cny": 2065.52,
       "product_name": "iTunes Gift Card 300 USD US",
-      "cny_per_usd_value": 6.8845
+      "cny_per_usd_value": 6.8851
     },
     {
       "face_value_usd": 400,
-      "list_price_cny": 2838.98,
-      "price_cny": 2753.81,
+      "list_price_cny": 2839.19,
+      "price_cny": 2754.01,
       "product_name": "iTunes Gift Card 400 USD US",
-      "cny_per_usd_value": 6.8845
+      "cny_per_usd_value": 6.885
     },
     {
       "face_value_usd": 500,
-      "list_price_cny": 3548.72,
-      "price_cny": 3442.26,
+      "list_price_cny": 3548.99,
+      "price_cny": 3442.52,
       "product_name": "iTunes Gift Card 500 USD US",
-      "cny_per_usd_value": 6.8845
+      "cny_per_usd_value": 6.885
     }
   ]
 }
