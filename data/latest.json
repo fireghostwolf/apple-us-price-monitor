@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "checked_at": "2026-10-19T18:08:11+00:00",
+  "checked_at": "2026-10-19T22:31:47+00:00",
   "source": {
     "name": "SEAGM",
     "url": "https://www.seagm.com/zh-cn/itunes-gift-card-united-states",
@@ -20,136 +20,136 @@
   "products": [
     {
       "face_value_usd": 2,
-      "list_price_cny": 14.39,
-      "price_cny": 13.67,
+      "list_price_cny": 14.37,
+      "price_cny": 13.65,
       "product_name": "iTunes Gift Card 2 USD US",
-      "cny_per_usd_value": 6.835
+      "cny_per_usd_value": 6.825
     },
     {
       "face_value_usd": 3,
-      "list_price_cny": 21.58,
-      "price_cny": 20.5,
+      "list_price_cny": 21.56,
+      "price_cny": 20.48,
       "product_name": "iTunes Gift Card 3 USD US",
-      "cny_per_usd_value": 6.8333
+      "cny_per_usd_value": 6.8267
     },
     {
       "face_value_usd": 4,
-      "list_price_cny": 28.77,
-      "price_cny": 27.33,
+      "list_price_cny": 28.75,
+      "price_cny": 27.31,
       "product_name": "iTunes Gift Card 4 USD US",
-      "cny_per_usd_value": 6.8325
+      "cny_per_usd_value": 6.8275
     },
     {
       "face_value_usd": 5,
-      "list_price_cny": 35.72,
-      "price_cny": 33.93,
+      "list_price_cny": 35.69,
+      "price_cny": 33.91,
       "product_name": "iTunes Gift Card 5 USD US",
-      "cny_per_usd_value": 6.786
+      "cny_per_usd_value": 6.782
     },
     {
       "face_value_usd": 10,
-      "list_price_cny": 71.37,
-      "price_cny": 67.8,
+      "list_price_cny": 71.31,
+      "price_cny": 67.74,
       "product_name": "iTunes Gift Card 10 USD US",
-      "cny_per_usd_value": 6.78
+      "cny_per_usd_value": 6.774
     },
     {
       "face_value_usd": 15,
-      "list_price_cny": 107.09,
-      "price_cny": 101.74,
+      "list_price_cny": 107.0,
+      "price_cny": 101.65,
       "product_name": "iTunes Gift Card 15 USD US",
-      "cny_per_usd_value": 6.7827
+      "cny_per_usd_value": 6.7767
     },
     {
       "face_value_usd": 20,
-      "list_price_cny": 142.74,
-      "price_cny": 135.6,
+      "list_price_cny": 142.62,
+      "price_cny": 135.49,
       "product_name": "iTunes Gift Card 20 USD US",
-      "cny_per_usd_value": 6.78
+      "cny_per_usd_value": 6.7745
     },
     {
       "face_value_usd": 25,
-      "list_price_cny": 178.39,
-      "price_cny": 169.47,
+      "list_price_cny": 178.25,
+      "price_cny": 169.34,
       "product_name": "iTunes Gift Card 25 USD US",
-      "cny_per_usd_value": 6.7788
+      "cny_per_usd_value": 6.7736
     },
     {
       "face_value_usd": 30,
-      "list_price_cny": 214.04,
-      "price_cny": 203.34,
+      "list_price_cny": 213.87,
+      "price_cny": 203.18,
       "product_name": "iTunes Gift Card 30 USD US",
-      "cny_per_usd_value": 6.778
+      "cny_per_usd_value": 6.7727
     },
     {
       "face_value_usd": 40,
-      "list_price_cny": 285.41,
-      "price_cny": 271.14,
+      "list_price_cny": 285.18,
+      "price_cny": 270.92,
       "product_name": "iTunes Gift Card 40 USD US",
-      "cny_per_usd_value": 6.7785
+      "cny_per_usd_value": 6.773
     },
     {
       "face_value_usd": 50,
-      "list_price_cny": 356.78,
-      "price_cny": 338.94,
+      "list_price_cny": 356.49,
+      "price_cny": 338.67,
       "product_name": "iTunes Gift Card 50 USD US",
-      "cny_per_usd_value": 6.7788
+      "cny_per_usd_value": 6.7734
     },
     {
       "face_value_usd": 60,
-      "list_price_cny": 428.08,
-      "price_cny": 415.24,
+      "list_price_cny": 427.74,
+      "price_cny": 414.91,
       "product_name": "iTunes Gift Card 60 USD US",
-      "cny_per_usd_value": 6.9207
+      "cny_per_usd_value": 6.9152
     },
     {
       "face_value_usd": 100,
-      "list_price_cny": 713.48,
-      "price_cny": 677.81,
+      "list_price_cny": 712.92,
+      "price_cny": 677.27,
       "product_name": "iTunes Gift Card 100 USD US",
-      "cny_per_usd_value": 6.7781
+      "cny_per_usd_value": 6.7727
     },
     {
       "face_value_usd": 150,
-      "list_price_cny": 1063.44,
-      "price_cny": 1031.54,
+      "list_price_cny": 1062.6,
+      "price_cny": 1030.72,
       "product_name": "iTunes Gift Card 150 USD US",
-      "cny_per_usd_value": 6.8769
+      "cny_per_usd_value": 6.8715
     },
     {
       "face_value_usd": 200,
-      "list_price_cny": 1417.92,
-      "price_cny": 1375.38,
+      "list_price_cny": 1416.8,
+      "price_cny": 1374.3,
       "product_name": "iTunes Gift Card 200 USD US",
-      "cny_per_usd_value": 6.8769
+      "cny_per_usd_value": 6.8715
     },
     {
       "face_value_usd": 250,
-      "list_price_cny": 1772.4,
-      "price_cny": 1719.23,
+      "list_price_cny": 1771.0,
+      "price_cny": 1717.87,
       "product_name": "iTunes Gift Card 250 USD US",
-      "cny_per_usd_value": 6.8769
+      "cny_per_usd_value": 6.8715
     },
     {
       "face_value_usd": 300,
-      "list_price_cny": 2126.88,
-      "price_cny": 2063.07,
+      "list_price_cny": 2125.2,
+      "price_cny": 2061.44,
       "product_name": "iTunes Gift Card 300 USD US",
-      "cny_per_usd_value": 6.8769
+      "cny_per_usd_value": 6.8715
     },
     {
       "face_value_usd": 400,
-      "list_price_cny": 2835.84,
-      "price_cny": 2750.76,
+      "list_price_cny": 2833.6,
+      "price_cny": 2748.59,
       "product_name": "iTunes Gift Card 400 USD US",
-      "cny_per_usd_value": 6.8769
+      "cny_per_usd_value": 6.8715
     },
     {
       "face_value_usd": 500,
-      "list_price_cny": 3544.81,
-      "price_cny": 3438.47,
+      "list_price_cny": 3542.01,
+      "price_cny": 3435.75,
       "product_name": "iTunes Gift Card 500 USD US",
-      "cny_per_usd_value": 6.8769
+      "cny_per_usd_value": 6.8715
     }
   ]
 }
